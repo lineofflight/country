@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: elgohr/Publish-Docker-Github-Action@v5
         with:
-          name: hakanensari/country
+          name: lineofflight/country
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           tag_semver: true

@@ -1,6 +1,6 @@
 # Country
 
-[![Build](https://github.com/hakanensari/country/workflows/Build/badge.svg)][action]
+[![Build](https://github.com/lineofflight/country/workflows/Build/badge.svg)][action]
 
 Country is an IP-to-country geolocation API that returns a user’s country based on their IP address.
 
@@ -54,10 +54,10 @@ The API automatically updates MaxMind data every 24 hours in the background.
 If you prefer not to use our hosted service, you can self-host with Docker.
 
 ```
-docker run -d -p 3000:3000 -e ACCOUNT_ID=YOUR_MAXMIND_ACCOUNT_ID -e LICENSE_KEY=YOUR_MAXMIND_LICENSE_KEY hakanensari/country
+docker run -d -p 3000:3000 -e ACCOUNT_ID=YOUR_MAXMIND_ACCOUNT_ID -e LICENSE_KEY=YOUR_MAXMIND_LICENSE_KEY lineofflight/country
 ```
 
 Replace `YOUR_MAXMIND_ACCOUNT_ID` and `YOUR_LICENSE_KEY` with your MaxMind account ID and the license key associated with it.
 
 [free-instance]: https://api.country.is
-[action]: https://github.com/hakanensari/country/actions
+[action]: https://github.com/lineofflight/country/actions

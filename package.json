@@ -7,7 +7,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hakanensari/country"
+    "url": "https://github.com/lineofflight/country"
   },
   "scripts": {
     "start": "node server.js",
