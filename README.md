@@ -59,5 +59,15 @@ docker run -d -p 3000:3000 -e ACCOUNT_ID=YOUR_MAXMIND_ACCOUNT_ID -e LICENSE_KEY=
 
 Replace `YOUR_MAXMIND_ACCOUNT_ID` and `YOUR_LICENSE_KEY` with your MaxMind account ID and the license key associated with it.
 
+### Cloudflare Integration
+
+To improve performance, deploy behind [Cloudflare][cloudflare]:
+
+1. Point your domain to Cloudflare's nameservers
+2. Enable Cloudflare proxying for your API endpoint (click the cloud icon next to your DNS record until it turns orange)
+
+When deployed with Cloudflare, the API will automatically use Cloudflare's geolocation data as the primary source, falling back to MaxMind when needed.
+
 [free-instance]: https://api.country.is
 [action]: https://github.com/lineofflight/country/actions
+[cloudflare]: https://www.cloudflare.com
