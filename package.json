@@ -17,7 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "maxmind": "^4.3.8",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.1"
   },
   "devDependencies": {
     "eslint": "^9.10.0",
