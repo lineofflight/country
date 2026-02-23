@@ -35,6 +35,38 @@ Returns the country of any given IP. The API supports both with IPv4 and IPv6.
 }
 ```
 
+### Extra fields
+
+Add `?fields=` to any GET request to include additional data. Available fields: `city`, `continent`, `subdivision`, `postal`, `location`, `asn`.
+
+```json
+/* https://api.country.is/8.8.8.8?fields=city,asn,location */
+{
+  "ip": "8.8.8.8",
+  "country": "US",
+  "city": "Mountain View",
+  "asn": { "number": 15169, "organization": "Google LLC" },
+  "location": { "latitude": 37.386, "longitude": -122.0838, "accuracy_radius": 1000, "time_zone": "America/Los_Angeles" }
+}
+```
+
+### POST /
+
+Look up multiple IPs in a single request (up to 100). Supports `?fields=` as well.
+
+```sh
+curl -X POST -H 'Content-Type: application/json' \
+  -d '["8.8.8.8","1.1.1.1"]' \
+  https://api.country.is/
+```
+
+```json
+[
+  { "ip": "8.8.8.8", "country": "US" },
+  { "ip": "1.1.1.1", "country": "AU" }
+]
+```
+
 ### GET /info
 
 Provides metadata about the API, including when the data sources were last updated.
@@ -47,7 +79,7 @@ Provides metadata about the API, including when the data sources were last updat
 }
 ```
 
-The API automatically updates MaxMind data every 24 hours in the background.
+The API automatically updates MaxMind data every 24 hours in the background. A machine-readable [OpenAPI spec](/openapi.json) is also available.
 
 ## Deployment
 
