@@ -1,4 +1,5 @@
 #!/bin/sh
 mkdir -p data
 cd data
-curl -L -u $ACCOUNT_ID:$LICENSE_KEY https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz | tar --strip-components 1 -zxf -
+curl -L -u $ACCOUNT_ID:$LICENSE_KEY https://download.maxmind.com/geoip/databases/GeoLite2-City/download?suffix=tar.gz | tar --strip-components 1 -zxf -
+curl -L -u $ACCOUNT_ID:$LICENSE_KEY https://download.maxmind.com/geoip/databases/GeoLite2-ASN/download?suffix=tar.gz | tar --strip-components 1 -zxf -

@@ -1,10 +1,11 @@
-const { spawn, spawnSync } = require("child_process")
-const { existsSync } = require("fs")
+import { spawn, spawnSync } from "child_process"
+import { existsSync } from "fs"
 
-const file = "./data/GeoLite2-Country.mmdb"
+export const cityFile = "./data/GeoLite2-City.mmdb"
+export const asnFile = "./data/GeoLite2-ASN.mmdb"
 
-function initializeDatabase() {
-  if (!existsSync(file)) {
+export function initializeDatabase(): void {
+  if (!existsSync(cityFile) || !existsSync(asnFile)) {
     if (process.env.LICENSE_KEY === undefined) {
       throw new Error(
         "Set license credentials to download GeoIP data from MaxMind",
@@ -15,7 +16,7 @@ function initializeDatabase() {
   }
 }
 
-function scheduleDatabaseUpdates() {
+export function scheduleDatabaseUpdates(): void {
   if (process.env.LICENSE_KEY && process.env.RUN_INTERVAL !== "false") {
     setInterval(
       () => {
@@ -25,10 +26,4 @@ function scheduleDatabaseUpdates() {
       24 * 3600 * 1000,
     )
   }
-}
-
-module.exports = {
-  initializeDatabase,
-  scheduleDatabaseUpdates,
-  file,
 }
