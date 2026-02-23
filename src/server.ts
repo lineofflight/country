@@ -14,7 +14,15 @@ if (cluster.isPrimary) {
     console.log(`Worker ${worker.process.pid} died`)
   })
 } else {
-  const app = require("./app").default
+  const { default: app } = require("./app")
+  const { initReaders } = require("./lookup")
+
+  process.on("message", (msg: string) => {
+    if (msg === "reload") {
+      initReaders()
+      console.log("Database updated")
+    }
+  })
 
   const port = process.env.PORT || 3000
   app.listen(port, () => {

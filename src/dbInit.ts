@@ -1,3 +1,4 @@
+import cluster from "cluster"
 import { spawn, spawnSync } from "child_process"
 import { existsSync } from "fs"
 
@@ -21,7 +22,14 @@ export function scheduleDatabaseUpdates(): void {
     setInterval(
       () => {
         console.log("Updating database")
-        spawn("./getdb")
+        const child = spawn("./getdb")
+        child.on("close", (code) => {
+          if (code === 0) {
+            for (const id in cluster.workers) {
+              cluster.workers[id]?.send("reload")
+            }
+          }
+        })
       },
       24 * 3600 * 1000,
     )
