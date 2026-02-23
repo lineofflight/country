@@ -10,7 +10,7 @@ describe("GET /", () => {
   let ip, req
 
   beforeEach(() => {
-    ip = "9.9.9.9"
+    ip = "8.8.8.8"
     req = request(app).get("/").set("x-forwarded-for", `${ip},1.2.3.4`)
   })
 
@@ -54,7 +54,7 @@ describe("GET /:ip", () => {
 
   describe("given a good ip", () => {
     beforeEach(() => {
-      ip = "9.9.9.9"
+      ip = "8.8.8.8"
       req = request(app).get(`/${ip}`).set("x-forwarded-for", "1.2.3.4")
     })
 
