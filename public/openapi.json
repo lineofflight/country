@@ -1,0 +1,287 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Country",
+    "description": "IP geolocation API",
+    "version": "5.0.0"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Look up the caller's IP",
+        "description": "Resolves the country of the caller's IP address. When behind Cloudflare, the CF-IPCountry header is preferred.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful lookup",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LookupResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "summary": "Batch lookup",
+        "description": "Look up multiple IPs in a single request. Maximum 100 IPs per request.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/fields"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "ipv4 or ipv6"
+                },
+                "maxItems": 100,
+                "example": ["8.8.8.8", "1.1.1.1"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Array of lookup results. IPs without a match return null country.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LookupResult"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/{ip}": {
+      "get": {
+        "summary": "Look up a specific IP",
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "ipv4 or ipv6"
+            },
+            "example": "8.8.8.8"
+          },
+          {
+            "$ref": "#/components/parameters/fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful lookup",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LookupResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/info": {
+      "get": {
+        "summary": "Service info",
+        "responses": {
+          "200": {
+            "description": "Service metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dataSources": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["maxmind", "cloudflare"]
+                    },
+                    "lastUpdated": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "fields": {
+        "name": "fields",
+        "in": "query",
+        "description": "Comma-separated list of extra fields to include.",
+        "schema": {
+          "type": "string",
+          "enum": ["city", "continent", "subdivision", "postal", "location", "asn"]
+        },
+        "example": "city,asn"
+      }
+    },
+    "schemas": {
+      "LookupResult": {
+        "type": "object",
+        "required": ["ip", "country"],
+        "properties": {
+          "ip": {
+            "type": "string",
+            "example": "8.8.8.8"
+          },
+          "country": {
+            "type": "string",
+            "nullable": true,
+            "example": "US"
+          },
+          "city": {
+            "type": "string",
+            "nullable": true,
+            "example": "Mountain View"
+          },
+          "continent": {
+            "type": "string",
+            "nullable": true,
+            "example": "NA"
+          },
+          "subdivision": {
+            "type": "string",
+            "nullable": true,
+            "example": "CA"
+          },
+          "postal": {
+            "type": "string",
+            "nullable": true,
+            "example": "94043"
+          },
+          "location": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "example": 37.386
+              },
+              "longitude": {
+                "type": "number",
+                "example": -122.0838
+              },
+              "accuracy_radius": {
+                "type": "integer",
+                "example": 1000
+              },
+              "time_zone": {
+                "type": "string",
+                "nullable": true,
+                "example": "America/Los_Angeles"
+              }
+            }
+          },
+          "asn": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "number": {
+                "type": "integer",
+                "example": 15169
+              },
+              "organization": {
+                "type": "string",
+                "example": "Google LLC"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "NotFound": {
+        "description": "IP could not be resolved",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "UnprocessableEntity": {
+        "description": "Invalid input",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unprocessable Entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
