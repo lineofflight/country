@@ -1,3 +1,4 @@
+import { version } from "../package.json"
 import cors from "cors"
 import express, { Request, Response } from "express"
 import morgan from "morgan"
@@ -40,6 +41,7 @@ app.get("/info", (req: Request, res: Response) => {
     dataSources.push("cloudflare")
   }
   res.json({
+    version,
     dataSources,
     lastUpdated: getMetadata().buildEpoch.toISOString(),
   })
