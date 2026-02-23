@@ -1,5 +1,5 @@
-*.test.js
 .*
 Dockerfile
-docs
 README.md
+docs
+dist
