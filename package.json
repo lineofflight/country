@@ -12,7 +12,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "eslint . && jest --detectOpenHandles"
+    "test": "eslint . && jest --detectOpenHandles",
+    "release": "git tag v$(node -p \"require('./package.json').version\") 2>/dev/null && git push --follow-tags || true"
   },
   "dependencies": {
     "cors": "^2.8.5",
