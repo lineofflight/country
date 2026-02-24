@@ -3,7 +3,7 @@
   "info": {
     "title": "Country",
     "description": "IP geolocation API",
-    "version": "5.0.0"
+    "version": "4.2.3"
   },
   "paths": {
     "/": {
@@ -124,6 +124,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "version": {
+                      "type": "string",
+                      "example": "4.2.3"
+                    },
                     "dataSources": {
                       "type": "array",
                       "items": {
