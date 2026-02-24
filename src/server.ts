@@ -12,6 +12,11 @@ if (cluster.isPrimary) {
 
   cluster.on("exit", (worker) => {
     console.log(`Worker ${worker.process.pid} died`)
+    if (Object.keys(cluster.workers!).length === 0) {
+      console.error("Exiting")
+      process.exit(1)
+    }
+    setTimeout(() => cluster.fork(), 5000)
   })
 } else {
   const { default: app } = require("./app")
