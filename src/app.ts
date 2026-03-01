@@ -36,6 +36,7 @@ app.use((req, res, next) => {
 app.use(express.static("public"))
 
 app.get("/info", (req: Request, res: Response) => {
+  res.set("Cache-Control", "no-cache")
   const dataSources = ["maxmind"]
   if (req.headers["cf-ipcountry"] !== undefined) {
     dataSources.push("cloudflare")

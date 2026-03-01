@@ -217,9 +217,9 @@ describe("GET /info", () => {
     expect(res.body.dataSources).toBeDefined()
   })
 
-  it("sets cache-control to public", async () => {
+  it("sets cache-control to no-cache", async () => {
     const res = await req
-    expect(res.headers["cache-control"]).toContain("public")
+    expect(res.headers["cache-control"]).toBe("no-cache")
   })
 })
 
