@@ -86,7 +86,12 @@ The API automatically updates MaxMind data every 24 hours in the background. A m
 If you prefer not to use our hosted service, you can self-host with Docker.
 
 ```
-docker run -d -p 3000:3000 -e ACCOUNT_ID=YOUR_MAXMIND_ACCOUNT_ID -e LICENSE_KEY=YOUR_MAXMIND_LICENSE_KEY lineofflight/country
+docker run -d -p 3000:3000 \
+  -e ACCOUNT_ID=YOUR_MAXMIND_ACCOUNT_ID \
+  -e LICENSE_KEY=YOUR_MAXMIND_LICENSE_KEY \
+  -v country-data:/app/data \
+  --pull always \
+  lineofflight/country
 ```
 
 Replace `YOUR_MAXMIND_ACCOUNT_ID` and `YOUR_LICENSE_KEY` with your MaxMind account ID and the license key associated with it.
