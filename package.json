@@ -16,7 +16,7 @@
     "release": "git tag v$(node -p \"require('./package.json').version\") 2>/dev/null && git push --follow-tags || true"
   },
   "dependencies": {
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "express": "^4.22.1",
     "maxmind": "^4.3.8",
     "morgan": "^1.10.1"
