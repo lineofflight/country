@@ -76,16 +76,12 @@ app.post("/", (req: Request, res: Response) => {
   res.json(results)
 })
 
-app.get("/{:ip}", (req: Request, res: Response) => {
+app.get("/{:ip}", (req: Request, res: Response, next) => {
   const ip = (req.params.ip as string | undefined) || req.ip!
   const fields = parseFields(req.query.fields as string | undefined)
 
-  if (req.params.ip) {
-    if (!validate(ip)) {
-      return res
-        .status(422)
-        .json({ error: { code: 422, message: "Unprocessable Entity" } })
-    }
+  if (req.params.ip && !validate(ip)) {
+    return next()
   }
 
   if (fields.size > 0) {
@@ -129,9 +125,7 @@ app.get("/{:ip}", (req: Request, res: Response) => {
 })
 
 app.get("*splat", (req: Request, res: Response) => {
-  return res
-    .status(422)
-    .json({ error: { code: 422, message: "Unprocessable Entity" } })
+  return res.status(404).json({ error: { code: 404, message: "Not Found" } })
 })
 
 export default app

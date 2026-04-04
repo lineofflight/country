@@ -104,7 +104,7 @@ describe("GET /:ip", () => {
 
     it("returns an error", async () => {
       const res = await req
-      expect(res.status).toBe(422)
+      expect(res.status).toBe(404)
     })
   })
 })
@@ -230,7 +230,13 @@ describe("GET /info", () => {
 
 it("handles bad routes", async () => {
   const res = await request(app).get("/foo/bar")
-  expect(res.status).toBe(422)
+  expect(res.status).toBe(404)
+})
+
+it("returns 404 for non-IP paths", async () => {
+  const res = await request(app).get("/.well-known/security.txt")
+  expect(res.status).toBe(404)
+  expect(res.body.error.code).toBe(404)
 })
 
 it("returns a robots.txt", async () => {
