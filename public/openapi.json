@@ -57,7 +57,7 @@
         },
         "responses": {
           "200": {
-            "description": "Array of lookup results. IPs without a match return null country.",
+            "description": "Array of lookup results. IPs without a match are omitted.",
             "content": {
               "application/json": {
                 "schema": {
@@ -106,9 +106,6 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
-          },
-          "422": {
-            "$ref": "#/components/responses/UnprocessableEntity"
           }
         }
       }
@@ -153,12 +150,11 @@
       "fields": {
         "name": "fields",
         "in": "query",
-        "description": "Comma-separated list of extra fields to include.",
+        "description": "Comma-separated list of extra fields to include. Valid values: city, continent, subdivision, postal, location, asn.",
         "schema": {
           "type": "string",
-          "enum": ["city", "continent", "subdivision", "postal", "location", "asn"]
-        },
-        "example": "city,asn"
+          "example": "city,asn"
+        }
       }
     },
     "schemas": {
