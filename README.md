@@ -1,7 +1,5 @@
 # Country
 
-[![Build](https://github.com/lineofflight/country/workflows/Build/badge.svg)][action]
-
 Country is an IP-to-country geolocation API that returns a user’s country based on their IP address.
 
 [We run a free instance][free-instance]—no API key
@@ -106,5 +104,4 @@ To improve performance, deploy behind [Cloudflare][cloudflare]:
 When deployed with Cloudflare, the API will automatically use Cloudflare's geolocation data as the primary source, falling back to MaxMind when needed.
 
 [free-instance]: https://api.country.is
-[action]: https://github.com/lineofflight/country/actions
 [cloudflare]: https://www.cloudflare.com
