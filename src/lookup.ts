@@ -75,7 +75,7 @@ export function lookupIp(
   const record = cityReader.get(ip)
   const country = record?.country?.iso_code ?? null
 
-  if (!country && fields.size === 0) return null
+  if (!country) return null
 
   const result: LookupResult = { ip, country }
 

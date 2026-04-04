@@ -69,10 +69,9 @@ app.post("/", (req: Request, res: Response) => {
   }
 
   const fields = parseFields(req.query.fields as string | undefined)
-  const results = ips.map((ip: string) => {
-    const result = lookupIp(ip, fields)
-    return result ?? { ip, country: null }
-  })
+  const results = ips
+    .map((ip: string) => lookupIp(ip, fields))
+    .filter((result): result is NonNullable<typeof result> => result !== null)
 
   res.json(results)
 })

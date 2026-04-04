@@ -149,6 +149,11 @@ describe("GET /:ip?fields=", () => {
     expect(Object.keys(res.body)).toEqual(["ip", "country"])
   })
 
+  it("returns 404 when ip has no country even with fields", async () => {
+    const res = await request(app).get("/192.168.0.1?fields=asn")
+    expect(res.status).toBe(404)
+  })
+
   it("returns fields with cloudflare override on GET /", async () => {
     const res = await request(app)
       .get("/?fields=city")
@@ -161,12 +166,12 @@ describe("GET /:ip?fields=", () => {
 
 describe("POST /", () => {
   it("returns results for valid IPs", async () => {
-    const res = await request(app).post("/").send(["8.8.8.8", "1.1.1.1"])
+    const res = await request(app).post("/").send(["8.8.8.8", "4.4.4.4"])
     expect(res.status).toBe(200)
     expect(res.body).toHaveLength(2)
     expect(res.body[0].ip).toBe("8.8.8.8")
     expect(res.body[0].country).toBe("US")
-    expect(res.body[1].ip).toBe("1.1.1.1")
+    expect(res.body[1].ip).toBe("4.4.4.4")
     expect(res.body[1].country).toBeDefined()
   })
 
@@ -186,10 +191,10 @@ describe("POST /", () => {
     expect(res.status).toBe(422)
   })
 
-  it("returns null country for private IPs", async () => {
+  it("omits unknown IPs from results", async () => {
     const res = await request(app).post("/").send(["192.168.0.1"])
     expect(res.status).toBe(200)
-    expect(res.body[0].country).toBeNull()
+    expect(res.body).toHaveLength(0)
   })
 
   it("supports fields parameter", async () => {
