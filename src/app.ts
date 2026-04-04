@@ -77,7 +77,7 @@ app.post("/", (req: Request, res: Response) => {
   res.json(results)
 })
 
-app.get("/:ip?", (req: Request, res: Response) => {
+app.get("/{:ip}", (req: Request, res: Response) => {
   const ip = (req.params.ip as string | undefined) || req.ip!
   const fields = parseFields(req.query.fields as string | undefined)
 
@@ -129,7 +129,7 @@ app.get("/:ip?", (req: Request, res: Response) => {
   }
 })
 
-app.get("*", (req: Request, res: Response) => {
+app.get("*splat", (req: Request, res: Response) => {
   return res
     .status(422)
     .json({ error: { code: 422, message: "Unprocessable Entity" } })
