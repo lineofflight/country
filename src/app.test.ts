@@ -96,14 +96,21 @@ describe("GET /:ip", () => {
     })
   })
 
-  describe("given an invalid ip", () => {
-    beforeEach(() => {
-      ip = "9.9.9.9boom"
-      req = request(app).get(`/${ip}`).set("x-forwarded-for", "1.2.3.4")
+  describe("given a malformed ip", () => {
+    it("returns 422", async () => {
+      const res = await request(app)
+        .get("/999.999.999.999")
+        .set("x-forwarded-for", "1.2.3.4")
+      expect(res.status).toBe(422)
+      expect(res.body.error.message).toBe("Invalid IP")
     })
+  })
 
-    it("returns an error", async () => {
-      const res = await req
+  describe("given a non-IP path", () => {
+    it("returns 404", async () => {
+      const res = await request(app)
+        .get("/banana")
+        .set("x-forwarded-for", "1.2.3.4")
       expect(res.status).toBe(404)
     })
   })

@@ -81,6 +81,11 @@ app.get("/{:ip}", (req: Request, res: Response, next) => {
   const fields = parseFields(req.query.fields as string | undefined)
 
   if (req.params.ip && !validate(ip)) {
+    if (ip.includes(".") || ip.includes(":")) {
+      return res
+        .status(422)
+        .json({ error: { code: 422, message: "Invalid IP" } })
+    }
     return next()
   }
 
