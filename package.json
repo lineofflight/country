@@ -18,7 +18,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.2.1",
-    "maxmind": "^5.0.5",
+    "maxmind": "^5.0.6",
     "morgan": "^1.10.1"
   },
   "devDependencies": {
