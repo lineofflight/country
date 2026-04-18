@@ -28,7 +28,7 @@
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^25.5.2",
+    "@types/node": "^25.6.0",
     "@types/supertest": "7.2.0",
     "ajv": "8.18.0",
     "ajv-formats": "3.0.1",
