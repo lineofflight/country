@@ -43,6 +43,6 @@
     "ts-jest": "^29.4.11",
     "tsx": "^4.22.3",
     "typescript": "6.0.3",
-    "typescript-eslint": "^8.60.0"
+    "typescript-eslint": "^8.60.1"
   }
 }
