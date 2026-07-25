@@ -29,7 +29,7 @@
     "@types/jest": "^30.0.0",
     "@types/morgan": "^1.9.10",
     "@types/node": "^26.1.1",
-    "@types/supertest": "7.2.0",
+    "@types/supertest": "7.2.1",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
     "eslint": "10.7.0",
