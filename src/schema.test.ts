@@ -1,10 +1,7 @@
+import { describe, expect, it } from "vitest"
 import Ajv from "ajv"
 import addFormats from "ajv-formats"
 import request from "supertest"
-import { initializeDatabase } from "./dbInit"
-
-initializeDatabase()
-
 import app from "./app"
 import spec from "../public/openapi.json"
 

@@ -1,8 +1,5 @@
+import { beforeEach, describe, expect, it } from "vitest"
 import request from "supertest"
-import { initializeDatabase } from "./dbInit"
-
-initializeDatabase()
-
 import app from "./app"
 
 describe("GET /", () => {
