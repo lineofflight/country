@@ -62,7 +62,16 @@ jobs:
         if: steps.meta.outputs.update-type == 'version-update:semver-patch' || steps.meta.outputs.update-type == 'version-update:semver-minor'
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          REPO: ${{ github.repository }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr merge --squash --delete-branch "$PR_URL"
+          # Not --delete-branch: that also deletes the *local* branch, and this
+          # job has no checkout, so gh exits 1 before the dispatch below runs.
+          gh pr merge --squash "$PR_URL"
+          # Delete the remote branch directly instead. Never fail the job over
+          # cleanup -- the publish dispatch below matters more.
+          gh api -X DELETE "repos/$REPO/git/refs/heads/$HEAD_REF" || true
+          # Merges made with GITHUB_TOKEN don't trigger workflows, so the push
+          # to main won't publish on its own.
           gh workflow run build.yml --ref main
