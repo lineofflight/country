@@ -22,7 +22,6 @@ export default [
   {
     languageOptions: {
       globals: {
-        ...globals.jest,
         ...globals.node,
       },
       ecmaVersion: 2020,
