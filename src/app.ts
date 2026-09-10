@@ -1,3 +1,4 @@
+import { readdirSync } from "fs"
 import { version } from "../package.json"
 import cors from "cors"
 import express, { Request, Response } from "express"
@@ -33,7 +34,8 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(express.static("public"))
+const staticFiles = readdirSync("public").map((f) => `/${f}`)
+app.get(staticFiles, express.static("public"))
 
 app.get("/info", (req: Request, res: Response) => {
   res.set("Cache-Control", "no-cache")

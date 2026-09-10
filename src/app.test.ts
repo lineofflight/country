@@ -247,3 +247,8 @@ it("returns a robots.txt", async () => {
   const res = await request(app).get("/robots.txt")
   expect(res.status).toBe(200)
 })
+
+it("returns openapi.json", async () => {
+  const res = await request(app).get("/openapi.json")
+  expect(res.status).toBe(200)
+})
