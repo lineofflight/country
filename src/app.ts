@@ -16,7 +16,11 @@ initReaders()
 
 const app = express()
 
-app.use(morgan("combined", { skip: () => process.env.NODE_ENV === "test" }))
+app.use(
+  morgan("tiny", {
+    skip: (req, res) => process.env.NODE_ENV === "test" || res.statusCode < 400,
+  }),
+)
 app.enable("trust proxy")
 
 app.use(cors())
