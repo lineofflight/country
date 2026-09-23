@@ -77,7 +77,7 @@ Provides metadata about the API, including when the data sources were last updat
 }
 ```
 
-The API automatically updates MaxMind data every 24 hours in the background. A machine-readable [OpenAPI spec](/openapi.json) is also available.
+The API automatically updates MaxMind data every 24 hours in the background. A machine-readable [OpenAPI spec](/public/openapi.json) is also available.
 
 ## Deployment
 
